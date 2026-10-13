@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Class 9-G | Computer Science & Tech Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* =================== RESET & VARIABLES =================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    :root {
+      --glass-bg: rgba(255, 255, 255, 0.12);
+      --glass-border: rgba(255, 255, 255, 0.25);
+      --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
+      --text-main: #ffffff;
+      --text-muted: #e2e8f0;
+      --accent-pink: #f472b6;
+      --accent-cyan: #38bdf8;
+      --accent-purple: #c084fc;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f172a 0%, #311042 50%, #1e1b4b 100%);
+      color: var(--text-main);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* =================== AMBIENT GLASS GLOW ORBS =================== */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(90px);
+      z-index: -1;
+      opacity: 0.6;
+      animation: float 12s ease-in-out infinite alternate;
+    }
+    .orb-1 {
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle, #ec4899, #8b5cf6);
+      top: -50px;
+      left: -50px;
+    }
+    .orb-2 {
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, #06b6d4, #6366f1);
+      bottom: -100px;
+      right: -50px;
+      animation-duration: 15s;
+    }
+    .orb-3 {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, #a855f7, #ec4899);
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px) scale(1); }
+      100% { transform: translateY(40px) scale(1.08); }
+    }
+
+    /* =================== GLASS COMPONENTS =================== */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      box-shadow: var(--glass-shadow);
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .glass-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 255, 255, 0.45);
+      box-shadow: 0 12px 40px rgba(244, 114, 182, 0.25);
+    }
+
+    /* =================== NAVBAR =================== */
+    nav {
+      position: sticky;
+      top: 15px;
+      z-index: 100;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(to right, #f472b6, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 24px;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    /* =================== HERO SECTION =================== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .hero {
+      padding: 70px 20px 40px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 999px;
+      background: rgba(244, 114, 182, 0.15);
+      border: 1px solid rgba(244, 114, 182, 0.4);
+      color: var(--accent-pink);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    .hero h1 span {
+      background: linear-gradient(90deg, #f472b6, #c084fc, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      max-width: 650px;
+      margin: 0 auto 30px;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+    .btn-group {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 12px 28px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #ec4899, #8b5cf6);
+      color: #fff;
+      border: none;
+      box-shadow: 0 4px 20px rgba(236, 72, 153, 0.4);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 6px 25px rgba(236, 72, 153, 0.6);
+      transform: translateY(-2px);
+    }
+    .btn-glass {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(10px);
+    }
+    .btn-glass:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    /* =================== STATS / PILLS =================== */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin: 40px 0 60px;
+    }
+    .stat-card {
+      padding: 24px;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      margin-bottom: 5px;
+    }
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* =================== SECTION TITLES =================== */
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .section-title h2 {
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+    }
+    .section-title p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* =================== CURRICULUM GRID =================== */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 70px;
+    }
+    .curriculum-card {
+      padding: 28px;
+      position: relative;
+    }
+    .badge-unit {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent-pink);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .curriculum-card h3 {
+      font-size: 1.3rem;
+      margin: 8px 0 12px;
+    }
+    .curriculum-card p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      color: var(--accent-cyan);
+    }
+
+    /* =================== LAB & ACTIVITIES SECTION =================== */
+    .features-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 70px;
+      align-items: center;
+    }
+    .feature-info {
+      padding: 36px;
+    }
+    .feature-info h3 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+    }
+    .feature-list {
+      list-style: none;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .feature-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .feature-list span.check {
+      background: rgba(56, 189, 248, 0.2);
+      color: var(--accent-cyan);
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    /* =================== STUDENT PROJECTS & SHOUTOUTS =================== */
+    .student-card {
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .avatar {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ec4899, #38bdf8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+    }
+
+    /* =================== FOOTER =================== */
+    footer {
+      max-width: 1200px;
+      margin: 40px auto 20px;
+      padding: 24px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* =================== RESPONSIVE =================== */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.1rem; }
+      .nav-links { display: none; }
+      .features-container { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Orbs for Glass Reflection -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- Navbar -->
+  <nav class="glass-card">
+    <div class="logo">
+      <span>👩‍💻</span> Class 9-G Tech
+    </div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#syllabus">Modules</a></li>
+      <li><a href="#lab">Computer Lab</a></li>
+      <li><a href="#showcase">Student Stars</a></li>
+    </ul>
+    <a href="#contact" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem;">Lab Login</a>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="container hero" id="about">
+    <div class="hero-badge">Grade 9 • Girls Computer Science Section</div>
+    <h1>Coding the Future with <span>Confidence & Creativity</span></h1>
+    <p>
+      Welcome to the 9th Grade Girls Computer Studies hub. From algorithms and web design to digital literacy and cybersecurity, we empower young women to become tomorrow's tech leaders.
+    </p>
+    <div class="btn-group">
+      <a href="#syllabus" class="btn btn-primary">Explore 9th Syllabus 📖</a>
+      <a href="#lab" class="btn btn-glass">Lab Schedule & Rules 🔬</a>
+    </div>
+  </header>
+
+  <!-- Quick Info Stats -->
+  <section class="container">
+    <div class="stats-grid">
+      <div class="glass-card stat-card">
+        <div class="stat-number">45+</div>
+        <div class="stat-label">Young Female Coders</div>
+      </div>
+      <div class="glass-card stat-card">
+        <div class="stat-number">Unit 1–8</div>
+        <div class="stat-label">Updated 9th Curriculum</div>
+      </div>
+      <div class="glass-card stat-card">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Hands-on Computer Lab Access</div>
+      </div>
+      <div class="glass-card stat-card">
+        <div class="stat-number">30+</div>
+        <div class="stat-label">Class Projects Completed</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Syllabus / Course Modules -->
+  <section class="container" id="syllabus">
+    <div class="section-title">
+      <h2>Curriculum & Learning Track</h2>
+      <p>Mastering core computer concepts and real-world digital tools</p>
+    </div>
+
+    <div class="grid-3">
+      <!-- Card 1 -->
+      <div class="glass-card curriculum-card">
+        <span class="badge-unit">Unit 01</span>
+        <h3>Fundamentals of Computers</h3>
+        <p>Evolution of computers, hardware components, input/output architecture, and operating systems.</p>
+        <div class="tags">
+          <span class="tag">Hardware</span>
+          <span class="tag">Motherboards</span>
+          <span class="tag">CPU Architecture</span>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="glass-card curriculum-card">
+        <span class="badge-unit">Unit 02</span>
+        <h3>Computational Thinking</h3>
+        <p>Problem-solving strategies, writing pseudocode, flowcharts, and developing logical algorithms.</p>
+        <div class="tags">
+          <span class="tag">Algorithms</span>
+          <span class="tag">Flowcharts</span>
+          <span class="tag">Logic Building</span>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="glass-card curriculum-card">
+        <span class="badge-unit">Unit 03</span>
+        <h3>Office Automation & Tools</h3>
+        <p>Creating professional documents, data spreadsheets with formulas, and digital presentations.</p>
+        <div class="tags">
+          <span class="tag">MS Word</span>
+          <span class="tag">Excel Sheets</span>
+          <span class="tag">Presentations</span>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="glass-card curriculum-card">
+        <span class="badge-unit">Unit 04</span>
+        <h3>Intro to Web & Coding</h3>
+        <p>Understanding HTML/CSS structures, basics of Python coding, and building interactive web pages.</p>
+        <div class="tags">
+          <span class="tag">HTML5</span>
+          <span class="tag">CSS Styling</span>
+          <span class="tag">Basic Python</span>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="glass-card curriculum-card">
+        <span class="badge-unit">Unit 05</span>
+        <h3>Cyber Safety & Ethics</h3>
+        <p>Data privacy, digital footprint, defending against phishing/malware, and safe internet etiquette.</p>
+        <div class="tags">
+          <span class="tag">Cyber Safety</span>
+          <span class="tag">Passkeys</span>
+          <span class="tag">Digital Ethics</span>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="glass-card curriculum-card">
+        <span class="badge-unit">Unit 06</span>
+        <h3>Networking & Cloud</h3>
+        <p>How the Internet works, LAN vs WAN topologies, routers, and secure cloud storage utilities.</p>
+        <div class="tags">
+          <span class="tag">IP Addresses</span>
+          <span class="tag">Wi-Fi & LAN</span>
+          <span class="tag">Cloud Drive</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lab Section -->
+  <section class="container" id="lab">
+    <div class="features-container">
+      <div class="glass-card feature-info">
+        <span class="badge-unit">High-Tech Environment</span>
+        <h3>The 9th Grade Lab Experience</h3>
+        <p>Our dedicated girls' computer lab is equipped with high-speed computers, dual monitors for team-programming, and guided mentorship.</p>
+        <ul class="feature-list">
+          <li><span class="check">✓</span> 1-to-1 PC workstation for every student</li>
+          <li><span class="check">✓</span> Python & Web Development coding sandboxes</li>
+          <li><span class="check">✓</span> Weekly peer-debugging and coding challenges</li>
+          <li><span class="check">✓</span> High-speed filtered educational internet access</li>
+        </ul>
+      </div>
+
+      <div class="glass-card feature-info" style="border-left: 4px solid var(--accent-pink);">
+        <span class="badge-unit">Class Guidelines</span>
+        <h3>Lab Protocol & Schedule</h3>
+        <p><strong>Class Timing:</strong> Mon & Wed (10:30 AM – 12:00 PM)</p>
+        <p style="margin-top: 10px;"><strong>Lab In-Charge:</strong> Ms. Ayesha / Computer Dept.</p>
+        <ul class="feature-list">
+          <li><span class="check">✦</span> Bring your Computer Practical Journal</li>
+          <li><span class="check">✦</span> Save lab files to your designated Student Drive</li>
+          <li><span class="check">✦</span> Proper system shutdown after practical hours</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Student Showcase -->
+  <section class="container" id="showcase">
+    <div class="section-title">
+      <h2>Student Innovators</h2>
+      <p>Recent project highlights from Class 9th Girls section</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="glass-card student-card">
+        <div class="avatar">F</div>
+        <div>
+          <h4>Fatima Zahra</h4>
+          <p style="font-size: 0.85rem; color: var(--accent-pink);">Calculator in Python</p>
+          <span style="font-size: 0.75rem; color: var(--text-muted);">Score: 10/10 • Perfect Logic</span>
+        </div>
+      </div>
+
+      <div class="glass-card student-card">
+        <div class="avatar">M</div>
+        <div>
+          <h4>Maryam Noor</h4>
+          <p style="font-size: 0.85rem; color: var(--accent-cyan);">School Quiz Website</p>
+          <span style="font-size: 0.75rem; color: var(--text-muted);">Built with HTML & CSS</span>
+        </div>
+      </div>
+
+      <div class="glass-card student-card">
+        <div class="avatar">Z</div>
+        <div>
+          <h4>Zainab Ali</h4>
+          <p style="font-size: 0.85rem; color: var(--accent-purple);">Cyber Safety Poster & PPT</p>
+          <span style="font-size: 0.75rem; color: var(--text-muted);">Class 9 Tech Fair Winner</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="glass-card" id="contact">
+    <p>© 9th Class Girls Section • Department of Computer Science & Information Technology</p>
+    <p style="font-size: 0.8rem; margin-top: 6px; color: rgba(255,255,255,0.6);">
+      Designed with Frosted Glassmorphism Theme • Empowering Young Women in STEM
+    </p>
+  </footer>
+
+</body>
+</html>
